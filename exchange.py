@@ -1,6 +1,3 @@
-import math
-
-
 def exchange_money(budget, exchange_rate):
     """
 
@@ -41,7 +38,7 @@ def get_number_of_bills(budget, denomination):
     :return: int - number of bills after exchanging all your money.
     """
 
-    return round(budget/denomination)
+    return budget//denomination
 
 
 def exchangeable_value(budget, exchange_rate, spread, denomination):
@@ -53,9 +50,8 @@ def exchangeable_value(budget, exchange_rate, spread, denomination):
     :param denomination: int - the value of a single bill.
     :return: int - maximum value you can get.
     """
-    exchange_after_spread = budget/float(exchange_rate+(exchange_rate*spread/100))
-    number_of_bills = exchange_after_spread//denomination
-    return math.trunc(denomination*number_of_bills)
+    exchange_after_spread =  get_exchange_money_after_spread(budget, exchange_rate, spread)
+    return int(denomination*get_number_of_bills(exchange_after_spread,denomination))
 
 
 
@@ -69,9 +65,15 @@ def non_exchangeable_value(budget, exchange_rate, spread, denomination):
     :return: int non-exchangeable value.
     """
 
-    exchange_after_spread = budget/float(exchange_rate+(exchange_rate*spread/100))
-    number_of_bills = exchange_after_spread//denomination
-    return int(exchange_after_spread%number_of_bills)
+    exchange_after_spread = get_exchange_money_after_spread(budget, exchange_rate, spread)
+    return int(exchange_after_spread%get_number_of_bills(exchange_after_spread,denomination))
+
+
+def get_spread(spread, constant=100):
+    return 1+spread/constant
+
+def get_exchange_money_after_spread(budget, exchange_rate, spread):
+    return exchange_money(budget, exchange_rate)/get_spread(spread)
 
 if __name__ == "__main__":
-    non_exchangeable_value(1500, 0.84, 25, 40)
+    non_exchangeable_value(100000, 10.61, 10, 1)

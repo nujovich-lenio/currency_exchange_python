@@ -13,7 +13,7 @@ class CurrencyExchangeTest(unittest.TestCase):
 
     @pytest.mark.task(taskno=1)
     def test_exchange_money(self):
-        input_data = [(100000, 0.84), (700000, 10.1)]
+        input_data = [(100000, 0.84, False), (700000, 10.1, False)]
         output_data = [119047, 69306]
 
         for variant, (input_data, output_data) in enumerate(zip(input_data, output_data), start=1):
